@@ -1,0 +1,49 @@
+{     "test":"This is a test",
+"snapshot": {
+      "element": [
+      {
+        "path": "Patient",
+        "short": "Information about an individual or animal receiving health care services",
+        "definition": "Demographics and other administrative information about an individual or animal receiving care or other health-related services.",
+        "alias": [
+          "SubjectOfCare Client Resident"
+        ],
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "DomainResource"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "cda",
+            "map": "ClinicalDocument.recordTarget.patientRole"
+          },
+          {
+            "identity": "rim",
+            "map": "Patient[classCode=PAT]"
+          },
+          {
+            "identity": "w5",
+            "map": "administrative.individual"
+          }
+        ]
+      },
+      {
+        "path": "Patient.id",
+        "short": "Logical id of this artifact",
+        "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
+        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation. Bundles always have an id, though it is usually a generated UUID.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "id"
+          }
+        ],
+        "isSummary": true
+      }
+    ]
+}
+}

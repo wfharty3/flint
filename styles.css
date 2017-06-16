@@ -1,0 +1,13 @@
+/* Master Styles */
+body {
+  margin: 2em;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+th {
+  font-weight: bold;
+  background-color: silver
+}

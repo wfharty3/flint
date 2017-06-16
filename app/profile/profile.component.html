@@ -1,0 +1,63 @@
+
+<!--<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".json">-->
+<input type="file" placeholder="Upload file" accept=".json">
+
+
+<h2>{{ def?.name }}</h2>
+<div>
+    {{ def?.description }} 
+    {{ def?.url}} - {{ def?.fhirVersion }} 
+    ({{ def?.differential?.element?.size }})   
+</div>
+
+  
+
+<div>
+<br>
+<input type="checkbox" [checked]="showCommon" (change)="showCommon = !showCommon">Show Common Resource Elements
+<br>
+<input type="checkbox" [checked]="showUnused" (change)="showUnused = !showUnused">Show Unused (max card = 0)
+<br>
+<br>
+</div>
+
+<table class='table table-bordered table-hover' *ngIf='def'>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Card</th>
+            <th>Must</th>
+            <th>Summ</th>
+            <th>Definition</th>
+            <th>OLKP Mapping</th>
+            <th>Example</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let element of def?.snapshot?.element"> 
+            <!--<tr [ngClass]="{'text-muted': element.max == 0 }" *ngIf="!isCommon(element?.base?.path) || showCommon">-->
+            <tr [ngClass]="{'text-muted': !isUsed(element) }" *ngIf="showElement(element)">
+                <!--<td [ngStyle]="{'text-indent':getIndent(element?.path)}"> <del> {{ element?.path }} </del>  </td>-->
+                <td [ngStyle]="{'text-indent':getIndent(element?.path)}">  {{ element?.path }}   </td>
+                <td>{{ element.type[0].code}}</td>
+                <td>{{ element.min}} - {{element.max}}</td>
+                <td>{{ element.mustSupport }}</td>
+                <td>{{ element.isSummary}} </td>
+                <td>{{ element.definition }}</td>
+                <td>
+                    <ul *ngFor="let mapping of element?.mapping"> 
+                        <li *ngIf="mapping.identity == 'OLKP'">{{mapping.map}}</li>
+                    </ul>
+                </td>
+                <td>
+                    {{ element.exampleIdentifier?.value }}
+                    {{ element.exampleUri }}
+                    {{ element.exampleString }}
+                    {{ element.exampleCode }}
+                    {{ element.examplePeriod?.start }} {{element.examplePeriod?.end}}
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
